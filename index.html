@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>士林廟口阿輝麵線 — Since 1980</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@400;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root {
+    --red: #D32F2F;
+    --red-dark: #B71C1C;
+    --red-light: #EF5350;
+    --yellow: #FFD54F;
+    --yellow-dark: #F9A825;
+    --bg: #FFF9C4;
+    --bg-warm: #FFF3E0;
+    --wood: #8D6E63;
+    --wood-dark: #5D4037;
+    --wood-light: #BCAAA4;
+    --ink: #3E2723;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--bg);
+    font-family: 'Noto Sans TC', sans-serif;
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* ─── MARQUEE ─── */
+  .led-marquee {
+    background: var(--red-dark);
+    border-bottom: 3px solid var(--yellow);
+    padding: 10px 0;
+    overflow: hidden;
+    position: relative;
+  }
+  .led-marquee::before,
+  .led-marquee::after {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 60px;
+    z-index: 2;
+  }
+  .led-marquee::before { left: 0; background: linear-gradient(to right, var(--red-dark), transparent); }
+  .led-marquee::after  { right: 0; background: linear-gradient(to left, var(--red-dark), transparent); }
+
+  .led-track {
+    display: flex;
+    width: max-content;
+    animation: scroll-left 28s linear infinite;
+  }
+  .led-track:hover { animation-play-state: paused; }
+
+  .led-item {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--yellow);
+    letter-spacing: 0.15em;
+    padding: 0 3rem;
+    white-space: nowrap;
+    text-shadow: 0 0 8px rgba(255,213,79,0.8), 0 0 20px rgba(255,213,79,0.4);
+  }
+  .led-dot {
+    color: var(--yellow-dark);
+    padding: 0 0.5rem;
+  }
+
+  @keyframes scroll-left {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* ─── NAVBAR ─── */
+  nav {
+    background: var(--red);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+  .nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    height: 64px;
+  }
+  .nav-brand {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 1.6rem;
+    color: var(--yellow);
+    letter-spacing: 0.1em;
+    text-shadow: 2px 2px 0px var(--red-dark);
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 0.5rem; }
+  .nav-links a {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #fff;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    border: 2px solid transparent;
+    transition: all 0.2s;
+    letter-spacing: 0.05em;
+  }
+  .nav-links a:hover {
+    background: var(--red-dark);
+    border-color: var(--yellow);
+    color: var(--yellow);
+  }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { width: 26px; height: 2px; background: #fff; border-radius: 2px; }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative;
+    height: 92vh;
+    min-height: 560px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(180,30,30,0.4) 60%, rgba(0,0,0,0.7) 100%),
+      url('https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=1600&q=80') center/cover no-repeat;
+    animation: steam-pan 20s ease-in-out infinite;
+    transform-origin: center;
+  }
+
+  @keyframes steam-pan {
+    0%   { filter: brightness(0.85) saturate(1.1); transform: scale(1.02) translateX(0); }
+    25%  { filter: brightness(0.9) saturate(1.2) blur(0.4px); }
+    50%  { filter: brightness(0.85) saturate(1.1); transform: scale(1.04) translateX(-8px); }
+    75%  { filter: brightness(0.88) saturate(1.15) blur(0.2px); }
+    100% { filter: brightness(0.85) saturate(1.1); transform: scale(1.02) translateX(0); }
+  }
+
+  /* Steam effect */
+  .steam-container {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 200px;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .steam {
+    position: absolute;
+    bottom: 0;
+    width: 60px;
+    height: 120px;
+    background: radial-gradient(ellipse at center, rgba(255,255,255,0.3) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: rise 4s ease-in infinite;
+    filter: blur(8px);
+  }
+  .steam:nth-child(1) { left: 20%; animation-delay: 0s; }
+  .steam:nth-child(2) { left: 40%; animation-delay: 1.3s; width: 80px; }
+  .steam:nth-child(3) { left: 60%; animation-delay: 2.6s; width: 50px; }
+  .steam:nth-child(4) { left: 75%; animation-delay: 0.8s; width: 70px; }
+  @keyframes rise {
+    0%   { opacity: 0; transform: translateY(0) scaleX(1); }
+    20%  { opacity: 0.6; }
+    100% { opacity: 0; transform: translateY(-140px) scaleX(2.5); }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-badge-top {
+    display: inline-block;
+    background: var(--yellow);
+    color: var(--red-dark);
+    font-family: 'Noto Serif TC', serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    padding: 6px 20px;
+    border-radius: 2px;
+    margin-bottom: 1.2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+
+  .hero-title {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: clamp(4rem, 12vw, 9rem);
+    color: #fff;
+    line-height: 1;
+    text-shadow:
+      4px 4px 0 var(--red-dark),
+      8px 8px 0 rgba(0,0,0,0.3),
+      0 0 60px rgba(255,213,79,0.3);
+    letter-spacing: 0.08em;
+    animation: title-glow 3s ease-in-out infinite;
+  }
+  @keyframes title-glow {
+    0%, 100% { text-shadow: 4px 4px 0 var(--red-dark), 8px 8px 0 rgba(0,0,0,0.3), 0 0 60px rgba(255,213,79,0.2); }
+    50%       { text-shadow: 4px 4px 0 var(--red-dark), 8px 8px 0 rgba(0,0,0,0.3), 0 0 80px rgba(255,213,79,0.5); }
+  }
+
+  .hero-sub {
+    font-family: 'Noto Serif TC', serif;
+    font-size: clamp(1rem, 3vw, 1.4rem);
+    color: var(--yellow);
+    letter-spacing: 0.4em;
+    margin-top: 0.8rem;
+    margin-bottom: 2rem;
+  }
+
+  .hero-cta {
+    display: inline-block;
+    background: var(--red);
+    color: #fff;
+    font-family: 'Noto Serif TC', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 14px 40px;
+    border-radius: 4px;
+    border: 3px solid var(--yellow);
+    text-decoration: none;
+    transition: all 0.2s;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  }
+  .hero-cta:hover {
+    background: var(--red-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  }
+
+  /* ─── MICHELIN BADGE ─── */
+  .michelin-badge {
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 99;
+    width: 80px;
+    text-align: center;
+    animation: wobble 5s ease-in-out infinite;
+  }
+  @keyframes wobble {
+    0%, 100% { transform: translateY(-50%) rotate(-2deg); }
+    50%       { transform: translateY(-50%) rotate(2deg); }
+  }
+  .michelin-inner {
+    background: #e53935;
+    border-radius: 50%;
+    width: 80px; height: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid var(--yellow);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.35), 0 0 0 4px rgba(255,213,79,0.2);
+    cursor: default;
+  }
+  .michelin-icon { font-size: 1.6rem; line-height: 1; }
+  .michelin-text {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 0.45rem;
+    color: var(--yellow);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-align: center;
+    line-height: 1.3;
+    margin-top: 2px;
+  }
+  .michelin-badge:hover .michelin-inner {
+    transform: scale(1.08);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  }
+
+  /* ─── SECTION HEADERS ─── */
+  .section-title {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    color: var(--red);
+    text-align: center;
+    letter-spacing: 0.12em;
+    margin-bottom: 0.5rem;
+    position: relative;
+    display: inline-block;
+  }
+  .section-title::after {
+    content: '';
+    display: block;
+    width: 60%;
+    height: 4px;
+    background: linear-gradient(to right, transparent, var(--yellow), transparent);
+    margin: 8px auto 0;
+  }
+  .section-subtitle {
+    font-family: 'Noto Serif TC', serif;
+    color: var(--wood);
+    text-align: center;
+    font-size: 0.95rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 3rem;
+  }
+  .section-header { text-align: center; margin-bottom: 3rem; }
+
+  /* ─── MENU SECTION ─── */
+  #menu {
+    background: var(--bg-warm);
+    padding: 5rem 2rem;
+    position: relative;
+  }
+  #menu::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(139,110,99,0.08) 39px, rgba(139,110,99,0.08) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(139,110,99,0.06) 39px, rgba(139,110,99,0.06) 40px);
+    pointer-events: none;
+  }
+
+  .menu-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+
+  /* Wood plank card */
+  .wood-card {
+    background: linear-gradient(135deg, #6D4C41 0%, #5D4037 40%, #4E342E 100%);
+    border-radius: 8px;
+    padding: 2rem;
+    position: relative;
+    box-shadow:
+      0 8px 24px rgba(0,0,0,0.25),
+      inset 0 1px 0 rgba(255,255,255,0.1),
+      inset 0 -1px 0 rgba(0,0,0,0.2);
+    border: 2px solid rgba(255,213,79,0.3);
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .wood-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(
+        92deg,
+        transparent 0px, transparent 8px,
+        rgba(255,255,255,0.02) 8px, rgba(255,255,255,0.02) 9px
+      );
+    pointer-events: none;
+  }
+  .wood-card:hover {
+    transform: translateY(-4px) rotate(0.3deg);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.15);
+  }
+  .wood-card-nail {
+    position: absolute;
+    top: 14px;
+    width: 10px; height: 10px;
+    background: radial-gradient(circle at 35% 35%, #bbb, #555);
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  }
+  .nail-l { left: 14px; }
+  .nail-r { right: 14px; }
+
+  .wood-card-title {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 1.6rem;
+    color: var(--yellow);
+    letter-spacing: 0.12em;
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 2px solid rgba(255,213,79,0.3);
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+  }
+  .wood-card-title span {
+    font-size: 1.2rem;
+    margin-right: 0.5rem;
+  }
+
+  .menu-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px dashed rgba(255,213,79,0.2);
+  }
+  .menu-item:last-child { border-bottom: none; }
+  .menu-item-name {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 1rem;
+    color: #FFECB3;
+    letter-spacing: 0.05em;
+    font-weight: 700;
+  }
+  .menu-item-note {
+    font-size: 0.75rem;
+    color: rgba(255,236,179,0.6);
+    display: block;
+    letter-spacing: 0.03em;
+  }
+  .menu-item-price {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 1.05rem;
+    color: var(--yellow);
+    font-weight: 700;
+    white-space: nowrap;
+    margin-left: 1rem;
+  }
+
+  /* ─── ABOUT SECTION ─── */
+  #about {
+    padding: 5rem 2rem;
+    background: var(--bg);
+  }
+  .about-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  .about-photo-frame {
+    position: relative;
+    aspect-ratio: 4/5;
+    background:
+      linear-gradient(135deg, rgba(211,47,47,0.1), rgba(255,213,79,0.05)),
+      url('https://images.unsplash.com/photo-1555126634-323283e090fa?w=600&q=80') center/cover no-repeat;
+    border-radius: 4px;
+    border: 6px solid #fff;
+    box-shadow: 8px 8px 0 var(--red), 12px 12px 0 var(--yellow-dark);
+  }
+  .about-photo-frame::after {
+    content: '📸 阿輝師傅';
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    background: var(--red);
+    color: var(--yellow);
+    font-family: 'Noto Serif TC', serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    letter-spacing: 0.05em;
+  }
+
+  .about-text {}
+  .about-year {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 5rem;
+    color: rgba(211,47,47,0.12);
+    line-height: 1;
+    margin-bottom: -1rem;
+    font-weight: 900;
+  }
+  .about-heading {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 2rem;
+    color: var(--red);
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
+  }
+  .about-body {
+    font-family: 'Noto Serif TC', serif;
+    line-height: 2;
+    color: #5D4037;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+  .about-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 1.5rem;
+  }
+  .about-tag {
+    background: var(--red);
+    color: #fff;
+    font-family: 'Noto Serif TC', serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 2px;
+    letter-spacing: 0.05em;
+  }
+
+  /* ─── FEATURES ─── */
+  .features {
+    background: var(--red);
+    padding: 4rem 2rem;
+  }
+  .features-grid {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  .feature-item {
+    text-align: center;
+    padding: 1.5rem;
+    border: 2px solid rgba(255,213,79,0.3);
+    border-radius: 4px;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .feature-item:hover {
+    border-color: var(--yellow);
+    background: rgba(255,213,79,0.05);
+  }
+  .feature-icon { font-size: 2.5rem; margin-bottom: 0.8rem; display: block; }
+  .feature-label {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--yellow);
+    letter-spacing: 0.08em;
+  }
+  .feature-desc {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.7);
+    margin-top: 0.4rem;
+    line-height: 1.6;
+  }
+
+  /* ─── LOCATION ─── */
+  #location {
+    padding: 5rem 2rem;
+    background: var(--bg-warm);
+  }
+  .location-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+  .map-placeholder {
+    background: linear-gradient(135deg, #e8d5c4, #d4b896);
+    border-radius: 8px;
+    aspect-ratio: 4/3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid var(--wood);
+    box-shadow: 6px 6px 0 var(--red);
+    position: relative;
+    overflow: hidden;
+  }
+  .map-placeholder::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 30px, rgba(139,110,99,0.1) 30px, rgba(139,110,99,0.1) 31px),
+      repeating-linear-gradient(90deg, transparent, transparent 30px, rgba(139,110,99,0.1) 30px, rgba(139,110,99,0.1) 31px);
+  }
+  .map-pin { font-size: 3rem; z-index: 1; }
+  .map-label {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 1.2rem;
+    color: var(--red);
+    z-index: 1;
+    margin-top: 0.5rem;
+    letter-spacing: 0.1em;
+  }
+  .map-sublabel {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 0.85rem;
+    color: var(--wood-dark);
+    z-index: 1;
+    letter-spacing: 0.05em;
+    margin-top: 0.2rem;
+  }
+
+  .info-card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 2rem;
+    border-left: 6px solid var(--red);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  }
+  .info-card h3 {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 1.6rem;
+    color: var(--red);
+    letter-spacing: 0.12em;
+    margin-bottom: 1.5rem;
+  }
+  .info-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+    padding-bottom: 1.2rem;
+    border-bottom: 1px solid #f0e6d6;
+  }
+  .info-row:last-child { border-bottom: none; margin-bottom: 0; }
+  .info-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
+  .info-label {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 0.78rem;
+    color: var(--wood);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    display: block;
+    margin-bottom: 2px;
+  }
+  .info-value {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 1rem;
+    color: var(--ink);
+    font-weight: 700;
+    line-height: 1.5;
+  }
+  .info-value.open { color: #2E7D32; }
+  .open-dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    background: #4CAF50;
+    border-radius: 50%;
+    margin-right: 6px;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .transit-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+  .transit-tag {
+    background: #FFF3E0;
+    border: 1px solid #FFB74D;
+    color: #E65100;
+    font-size: 0.78rem;
+    font-family: 'Noto Serif TC', serif;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 20px;
+  }
+
+  /* ─── DIVIDER ─── */
+  .red-divider {
+    text-align: center;
+    padding: 2rem 0;
+    background: var(--red);
+    overflow: hidden;
+    position: relative;
+  }
+  .divider-text {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 1.4rem;
+    color: var(--yellow);
+    letter-spacing: 1em;
+    text-indent: 1em;
+  }
+  .divider-dots {
+    font-size: 1.5rem;
+    color: rgba(255,213,79,0.3);
+    letter-spacing: 0.5em;
+    margin-top: 0.3rem;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--red-dark);
+    padding: 3rem 2rem 1.5rem;
+    text-align: center;
+  }
+  .footer-brand {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 2rem;
+    color: var(--yellow);
+    letter-spacing: 0.15em;
+    margin-bottom: 0.5rem;
+  }
+  .footer-sub {
+    font-family: 'Noto Serif TC', serif;
+    color: rgba(255,255,255,0.6);
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
+  }
+  .footer-line {
+    border-color: rgba(255,213,79,0.2);
+    margin: 1.5rem auto;
+    max-width: 400px;
+  }
+  .footer-copy {
+    font-family: 'Noto Sans TC', sans-serif;
+    color: rgba(255,255,255,0.35);
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+  }
+
+  /* ─── SCROLL ANIMATION ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ─── MOBILE ─── */
+  @media (max-width: 768px) {
+    .nav-links { display: none; flex-direction: column; position: absolute; top: 64px; left: 0; right: 0; background: var(--red-dark); padding: 1rem; gap: 0; }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: 0.8rem 1rem; border-radius: 0; }
+    .hamburger { display: flex; }
+    .about-inner, .location-inner { grid-template-columns: 1fr; }
+    .features-grid { grid-template-columns: 1fr; }
+    .michelin-badge { right: 10px; width: 64px; }
+    .michelin-inner { width: 64px; height: 64px; }
+    .michelin-icon { font-size: 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- LED MARQUEE -->
+<div class="led-marquee" role="marquee" aria-label="動態跑馬燈">
+  <div class="led-track" id="ledTrack">
+    <!-- filled by JS -->
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-brand">🍜 阿輝麵線</a>
+    <div class="nav-links" id="navLinks">
+      <a href="#menu">🪵 作伙來呷</a>
+      <a href="#about">📖 阮的故事</a>
+      <a href="#location">🗺️ 逗陣去</a>
+    </div>
+    <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- MICHELIN BADGE -->
+<div class="michelin-badge" title="米其林必比登推薦">
+  <div class="michelin-inner">
+    <span class="michelin-icon">⭐</span>
+    <div class="michelin-text">米其林<br>必比登<br>推薦</div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="steam-container">
+    <div class="steam"></div>
+    <div class="steam"></div>
+    <div class="steam"></div>
+    <div class="steam"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge-top">🏆 米其林指南必比登推薦</div>
+    <h1 class="hero-title">阿輝麵線</h1>
+    <p class="hero-sub">SINCE &nbsp;1980 &nbsp;·&nbsp; 士林廟口</p>
+    <a href="#menu" class="hero-cta">呷飽沒？ 來看菜單 ↓</a>
+  </div>
+</section>
+
+<!-- FEATURES STRIP -->
+<div class="features">
+  <div class="features-grid">
+    <div class="feature-item reveal">
+      <span class="feature-icon">🏅</span>
+      <div class="feature-label">傳承超過 40 年</div>
+      <div class="feature-desc">從 1980 年創業至今，三代人守護的好味道</div>
+    </div>
+    <div class="feature-item reveal" style="transition-delay:0.15s">
+      <span class="feature-icon">🍜</span>
+      <div class="feature-label">現熬大腸湯頭</div>
+      <div class="feature-desc">每日清晨現煮，不加味精，純粹鮮甜</div>
+    </div>
+    <div class="feature-item reveal" style="transition-delay:0.3s">
+      <span class="feature-icon">⭐</span>
+      <div class="feature-label">米其林必比登</div>
+      <div class="feature-desc">連續三年獲米其林指南必比登推薦殊榮</div>
+    </div>
+  </div>
+</div>
+
+<!-- MENU -->
+<section id="menu">
+  <div class="section-header">
+    <h2 class="section-title">作伙來呷</h2>
+    <p class="section-subtitle">tsa̍k-hué lâi-chia̍h · 今日菜單</p>
+  </div>
+  <div class="menu-grid reveal">
+
+    <!-- 招牌麵線 -->
+    <div class="wood-card">
+      <div class="wood-card-nail nail-l"></div>
+      <div class="wood-card-nail nail-r"></div>
+      <div class="wood-card-title"><span>🍜</span>招牌麵線</div>
+      <div class="menu-item">
+        <div>
+          <div class="menu-item-name">大腸麵線</div>
+          <span class="menu-item-note">必比登推薦招牌</span>
+        </div>
+        <div class="menu-item-price">小 $50 / 大 $70</div>
+      </div>
+      <div class="menu-item">
+        <div>
+          <div class="menu-item-name">蚵仔麵線</div>
+          <span class="menu-item-note">現撈新鮮蚵仔</span>
+        </div>
+        <div class="menu-item-price">小 $55 / 大 $75</div>
+      </div>
+      <div class="menu-item">
+        <div>
+          <div class="menu-item-name">綜合麵線</div>
+          <span class="menu-item-note">大腸＋蚵仔同享</span>
+        </div>
+        <div class="menu-item-price">小 $60 / 大 $80</div>
+      </div>
+      <div class="menu-item">
+        <div>
+          <div class="menu-item-name">加大份量</div>
+          <span class="menu-item-note">吃不飽就加這個</span>
+        </div>
+        <div class="menu-item-price">$20</div>
+      </div>
+    </div>
+
+    <!-- 乾麵小點 -->
+    <div class="wood-card">
+      <div class="wood-card-nail nail-l"></div>
+      <div class="wood-card-nail nail-r"></div>
+      <div class="wood-card-title"><span>🥢</span>乾麵小點</div>
+      <div class="menu-item">
+        <div>
+          <div class="menu-item-name">招牌乾麵</div>
+          <span class="menu-item-note">醬汁秘方傳三代</span>
+        </div>
+        <div class="menu-item-price">$45</div>
+      </div>
+      <div class="menu-item">
+        <div>
+          <div class="menu-item-name">麻醬麵</div>
+          <span class="menu-item-note">現磨芝麻醬</span>
+        </div>
+        <div class="menu-item-price">$45</div>
+      </div>
+      <div class="menu-item">
+        <div>
+          <div class="menu-item-name">滷肉飯</div>
+          <span class="menu-item-note">老滷汁，香Q入味</span>
+        </div>
+        <div class="menu-item-price">$35</div>
+      </div>
+      <div class="menu-item">
+        <div>
+          <div class="menu-item-name">貢丸湯</div>
+          <span class="menu-item-note">新竹手工貢丸</span>
+        </div>
+        <div class="menu-item-price">$30</div>
+      </div>
+    </div>
+
+    <!-- 古早味小菜 -->
+    <div class="wood-card">
+      <div class="wood-card-nail nail-l"></div>
+      <div class="wood-card-nail nail-r"></div>
+      <div class="wood-card-title"><span>🥬</span>古早味小菜</div>
+      <div class="menu-item">
+        <div>
+          <div class="menu-item-name">滷豆腐</div>
+          <span class="menu-item-note">入味綿軟</span>
+        </div>
+        <div class="menu-item-price">$25</div>
+      </div>
+      <div class="menu-item">
+        <div>
+          <div class="menu-item-name">滷蛋</div>
+          <span class="menu-item-note">茶葉蛋風味</span>
+        </div>
+        <div class="menu-item-price">$15</div>
+      </div>
+      <div class="menu-item">
+        <div>
+          <div class="menu-item-name">海帶結</div>
+          <span class="menu-item-note">爽口不膩</span>
+        </div>
+        <div class="menu-item-price">$20</div>
+      </div>
+      <div class="menu-item">
+        <div>
+          <div class="menu-item-name">豬頭皮</div>
+          <span class="menu-item-note">老台北限定古早味</span>
+        </div>
+        <div class="menu-item-price">$35</div>
+      </div>
+    </div>
+
+  </div>
+  <p style="text-align:center; margin-top: 2rem; font-family:'Noto Serif TC',serif; color: var(--wood); font-size: 0.88rem; letter-spacing:0.08em;">※ 價格如有調整，以現場公告為準 &nbsp;|&nbsp; 外帶歡迎自備容器</p>
+</section>
+
+<!-- DIVIDER -->
+<div class="red-divider">
+  <div class="divider-text">士 林 廟 口 的 溫 度</div>
+  <div class="divider-dots">· · · · · · · · · ·</div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-inner">
+    <div class="about-photo-frame reveal"></div>
+    <div class="reveal" style="transition-delay:0.2s">
+      <div class="about-year">1980</div>
+      <h2 class="about-heading">阮的故事</h2>
+      <p class="about-body">
+        民國六十九年，阿輝師傅帶著一鍋老滷汁，在士林廟口旁支起第一個麵線攤。那時候一碗才五塊錢，但街坊鄰居都說這味道「嘸比可比」。
+      </p>
+      <p class="about-body">
+        四十幾年來，我們不換料、不走捷徑。大腸滷到軟嫩入味，麵線燙到剛剛好的 Q 度，芫荽要新鮮、蒜汁要現磨——每一碗都是阿輝師傅的心血。
+      </p>
+      <p class="about-body">
+        現在傳到第二代、第三代，味道還是那個味道。米其林說推薦，我們說：「是因為老客人一直來。」
+      </p>
+      <div class="about-tags">
+        <span class="about-tag">🏅 米其林必比登</span>
+        <span class="about-tag">📺 各大媒體報導</span>
+        <span class="about-tag">❤️ 三代傳承</span>
+        <span class="about-tag">🌿 不加味精</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section id="location">
+  <div class="section-header">
+    <h2 class="section-title">逗陣去</h2>
+    <p class="section-subtitle">tàu-tīnn khì · 交通資訊</p>
+  </div>
+  <div class="location-inner">
+    <div class="map-placeholder reveal">
+      <div class="map-pin">📍</div>
+      <div class="map-label">士林廟口</div>
+      <div class="map-sublabel">基河路 101 號附近</div>
+    </div>
+    <div class="info-card reveal" style="transition-delay:0.2s">
+      <h3>來去士林找阿輝</h3>
+      <div class="info-row">
+        <div class="info-icon">📍</div>
+        <div>
+          <span class="info-label">地址</span>
+          <div class="info-value">台北市士林區基河路 101 號<br>（士林慈誠宮廟口旁）</div>
+        </div>
+      </div>
+      <div class="info-row">
+        <div class="info-icon">🕐</div>
+        <div>
+          <span class="info-label">營業時間</span>
+          <div class="info-value open">
+            <span class="open-dot"></span>週二至週日&ensp;10:00 – 20:00
+          </div>
+          <div style="font-size:0.82rem; color:#999; margin-top:3px; font-family:'Noto Serif TC',serif;">週一店休 · 假日排隊請耐心等候</div>
+        </div>
+      </div>
+      <div class="info-row">
+        <div class="info-icon">🚇</div>
+        <div>
+          <span class="info-label">捷運 MRT</span>
+          <div class="transit-tags">
+            <span class="transit-tag">🔴 淡水信義線</span>
+            <span class="transit-tag">劍潭站 1 號出口</span>
+            <span class="transit-tag">步行 5 分鐘</span>
+          </div>
+        </div>
+      </div>
+      <div class="info-row">
+        <div class="info-icon">🚌</div>
+        <div>
+          <span class="info-label">公車</span>
+          <div class="info-value" style="font-size:0.9rem;">255、302、紅 30、620<br>「士林站」下車</div>
+        </div>
+      </div>
+      <div class="info-row">
+        <div class="info-icon">📞</div>
+        <div>
+          <span class="info-label">電話</span>
+          <div class="info-value">(02) 2888-XXXX</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">🍜 阿輝麵線</div>
+  <div class="footer-sub">士林廟口 · Since 1980 · 米其林必比登推薦</div>
+  <hr class="footer-line">
+  <p class="footer-copy">© 2024 士林廟口阿輝麵線&emsp;·&emsp;版權所有，翻印必究</p>
+  <p class="footer-copy" style="margin-top:6px;">呷飽沒？記得帶朋友再來 😄</p>
+</footer>
+
+<script>
+// ─── MARQUEE ───
+const items = [
+  '⭐ 米其林指南必比登推薦',
+  '🕰️ 傳承自 1980 年',
+  '🏮 士林廟口老字號',
+  '🍜 大腸蚵仔麵線',
+  '📺 各大媒體爭相報導',
+  '❤️ 三代傳承的好味道',
+  '🌿 每日現熬，不加味精',
+  '🤤 呷飽沒？快來試試看',
+];
+
+const track = document.getElementById('ledTrack');
+const doubled = [...items, ...items];
+doubled.forEach(text => {
+  const span = document.createElement('span');
+  span.className = 'led-item';
+  span.textContent = text;
+  track.appendChild(span);
+  const dot = document.createElement('span');
+  dot.className = 'led-item led-dot';
+  dot.textContent = '◆';
+  track.appendChild(dot);
+});
+
+// ─── HAMBURGER ───
+function toggleMenu() {
+  document.getElementById('navLinks').classList.toggle('open');
+}
+document.querySelectorAll('#navLinks a').forEach(a =>
+  a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'))
+);
+
+// ─── SCROLL REVEAL ───
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
